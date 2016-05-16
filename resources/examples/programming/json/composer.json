@@ -1,0 +1,53 @@
+{
+    "name": "anhnhan/converge",
+    "require": {
+        "php": "~5.4.11|~5.5.0|~5.6.0",
+        "apexstudios/yamwlib": "dev-master",
+        "facebook/libphutil": "dev-master",
+        "ircmaxell/password-compat": "~1.0",
+        "psr/log": "~1.0",
+        "symfony/dependency-injection": "~2.6",
+        "symfony/http-kernel": "~2.6",
+        "symfony/security": "~2.6",
+        "symfony/stopwatch": "~2.6",
+        "erusev/parsedown": "~0.7",
+        "doctrine/orm": "~2.4",
+        "monolog/monolog": "~1.12",
+        "symfony/config": "~2.6",
+        "symfony/routing": "~2.6",
+        "symfony/yaml": "~2.6",
+        "league/fractal": "0.6.*",
+        "league/monga": "1.*",
+        "react/react": "0.3.*",
+        "Respect/Validation": "~0.7",
+        "knplabs/gaufrette": "~0.1",
+        "phpspec/php-diff": "1.0.2",
+        "redeyeventures/geopattern": "1.0.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.5",
+        "phpunit/php-code-coverage": "*",
+        "satooshi/php-coveralls": "*",
+        "symfony/console": "~2.6",
+        "fzaninotto/faker": "~1.4"
+    },
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Anh Nhan Nguyen",
+            "email": "anhnhan@outlook.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "AnhNhan\\Converge":	"src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/AnhNhan/libphutil"
+        }
+    ]
+}

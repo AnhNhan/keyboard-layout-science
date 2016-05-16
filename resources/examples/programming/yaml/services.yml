@@ -1,0 +1,174 @@
+
+parameters:
+  # Paths
+  # project.root: /path/to/project/
+  project.cache: cache/
+  project.src:   src/
+
+  # MongoDB
+  mongodb.host: localhost
+  mongodb.db:   modhub
+  mongodb.port: 27017
+  mongodb.collection.logger: monolog
+  mongodb.collection.cache: cache
+
+  # Doctrine
+  doctrine.proxy.path: null
+  doctrine.cache.region.config.lifetime: 3600
+  doctrine.cache.region.config.lifetime.lock: 5
+
+user-security:
+  providerKey: Converge
+  session.mongo.collection: _session
+  security.http.login.path: /login
+  security.http.logout.path: /login
+  security.http.logout.target: /
+
+services:
+
+  # ----------------------------------------------------------------------------
+  # Generic
+  # ----------------------------------------------------------------------------
+
+  request_stack:
+    class: Symfony\Component\HttpFoundation\RequestStack
+    synthetic: true
+
+  http_kernel:
+    class: AnhNhan\Converge\Web\HttpKernel
+    synthetic: true
+
+  event_dispatcher:
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+
+  app_routing:
+    class: AnhNhan\Converge\Web\AppRouting
+    synthetic: true
+
+  # ----------------------------------------------------------------------------
+  # Doctrine
+  # ----------------------------------------------------------------------------
+
+  doctrine.cache.region.config.default:
+    class: Doctrine\ORM\Cache\RegionsConfiguration
+    public: false
+    arguments:
+      - %doctrine.cache.region.config.lifetime%
+      - %doctrine.cache.region.config.lifetime.lock%
+
+  doctrine.cache.region.factory.default:
+    class: Doctrine\ORM\Cache\DefaultCacheFactory
+    public: false
+    arguments:
+      - @doctrine.cache.region.config.default
+      - @cache.doctrine.region.default
+
+  doctrine.cache.region.factory:
+    alias: doctrine.cache.region.factory.default
+
+  doctrine.cache.region.logger:
+    class: Doctrine\ORM\Cache\Logging\StatisticsCacheLogger
+
+  # ----------------------------------------------------------------------------
+  # MongoDB
+  # ----------------------------------------------------------------------------
+
+  mongoclient:
+    class: MongoClient
+    arguments: ["mongodb://%mongodb.host%:%mongodb.port%"]
+  mongodb:
+    class: MongoDB
+    factory_service: mongoclient
+    factory_method:  selectDB
+    arguments: ["%mongodb.db%"]
+
+  # ----------------------------------------------------------------------------
+  # Resource handling
+  # ----------------------------------------------------------------------------
+
+  resource_manager:
+    class: AnhNhan\Converge\Modules\StaticResources\ResMgr
+    synthetic: true
+
+  # ----------------------------------------------------------------------------
+  # Caches
+  # ----------------------------------------------------------------------------
+
+  mongodb.collection.cache:
+    class: MongoCollection
+    public: false
+    factory_service: mongodb
+    factory_method: selectCollection
+    arguments: ["%mongodb.collection.cache%"]
+  cache.mongodb:
+    class: Doctrine\Common\Cache\MongoDBCache
+    arguments: ["@mongodb.collection.cache"]
+    tags:
+      - { name: cache }
+
+  cache.apc:
+    class: Doctrine\Common\Cache\ApcCache
+    tags:
+      - { name: cache }
+
+  cache.filesystem:
+    class: Doctrine\Common\Cache\FilesystemCache
+    arguments: ["%project.root%%project.cache%"]
+    tags:
+      - { name: cache }
+
+  cache.default:
+    alias: cache.filesystem
+    tags:
+      - { name: cache }
+
+  cache.resmgr:
+    alias: cache.default
+    tags:
+      - { name: cache }
+
+  cache.doctrine:
+    # Not using alias since we may use cache prefix
+    class: Doctrine\Common\Cache\FilesystemCache
+    arguments: ["%project.root%%project.cache%"]
+    tags:
+      - { name: cache }
+
+  cache.doctrine.region.default:
+    # Not using alias since we may use cache prefix
+    class: Doctrine\Common\Cache\FilesystemCache
+    arguments: ["%project.root%%project.cache%"]
+    public: false
+    tags:
+      - { name: cache }
+
+  stopwatch:
+    class: Symfony\Component\Stopwatch\Stopwatch
+
+  # ----------------------------------------------------------------------------
+  # Logging
+  # ----------------------------------------------------------------------------
+
+  logger_mongohandler:
+    class: Monolog\Handler\MongoDBHandler
+    arguments: ["@mongoclient", "%mongodb.db%", "%mongodb.collection.logger%"]
+    public: false
+  logger_psrprocessor:
+    class: Monolog\Processor\PsrLogMessageProcessor
+    public: false
+  logger_memoryprocessor:
+    class: Monolog\Processor\MemoryUsageProcessor
+    public: false
+  logger_introspectionprocessor:
+    class: Monolog\Processor\IntrospectionProcessor
+    public: false
+  logger:
+    class: Monolog\Logger
+    arguments:
+      - "default"
+      - ["@logger_mongohandler"]
+      - ["@logger_psrprocessor", "@logger_memoryprocessor", "@logger_introspectionprocessor"]
+
+  # Doctrine Sql Logger
+  logger.doctrine.sql:
+    class: Doctrine\DBAL\Logging\DebugStack

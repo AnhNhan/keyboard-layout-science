@@ -1,0 +1,153 @@
+
+.grid-system {
+    .no-margin-padding;
+}
+
+.grid-system .row, .grid-system .row-flex {
+    .no-padding;
+    width: 100%;
+
+    margin-left: (@gridGutterWidth / -2);
+    margin-right: (@gridGutterWidth / -2);
+
+    @media screen and (max-width: @breakPointTablet) {
+        margin: 0;
+    }
+
+    .clearfix;
+
+    .div-grid, .width1, .width2, .width3, .width4, .width5, .width6, .width7, .width8, .width9, .width10, .width11, .width12 {
+        .no-margin;
+        .float-left;
+        position: relative;
+        // Prevent columns from collapsing when empty
+        min-height: 1px;
+
+        padding: (@gridGutterWidth / 2);
+
+        & > .grid-system {
+            margin-top: (@gridGutterWidth / -2);
+        }
+
+        .grid-system {
+            // Placing a grid within a column narrows it unnecessarily
+            // Fix that
+            margin-right: (@gridGutterWidth / -2);
+            margin-left: (@gridGutterWidth / -2);
+
+            .row, .row-flex {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        @media screen and (max-width: @breakPointTablet) {
+            float: none;
+            width: 100% !important;
+        }
+    }
+}
+
+.grid-system .row {
+    .width1 {
+        .grid-width(1);
+    }
+
+    .width2 {
+        .grid-width(2);
+    }
+
+    .width3 {
+        .grid-width(3);
+    }
+
+    .width4 {
+        .grid-width(4);
+    }
+
+    .width5 {
+        .grid-width(5);
+    }
+
+    .width6 {
+        .grid-width(6);
+    }
+
+    .width7 {
+        .grid-width(7);
+    }
+
+    .width8 {
+        .grid-width(8);
+    }
+
+    .width9 {
+        .grid-width(9);
+    }
+
+    .width10 {
+        .grid-width(10);
+    }
+
+    .width11 {
+        .grid-width(11);
+    }
+
+    .width12 {
+        .grid-width(12);
+    }
+}
+
+.grid-system .row-flex {
+    .width1 {
+        .grid-width-flex(1);
+    }
+
+    .width2 {
+        .grid-width-flex(2);
+    }
+
+    .width3 {
+        .grid-width-flex(3);
+    }
+
+    .width4 {
+        .grid-width-flex(4);
+    }
+
+    .width5 {
+        .grid-width-flex(5);
+    }
+
+    .width6 {
+        .grid-width-flex(6);
+    }
+
+    .width7 {
+        .grid-width-flex(7);
+    }
+
+    .width8 {
+        .grid-width-flex(8);
+    }
+
+    .width9 {
+        .grid-width-flex(9);
+    }
+
+    .width10 {
+        .grid-width-flex(10);
+    }
+
+    .width11 {
+        .grid-width-flex(11);
+    }
+
+    .width12 {
+        .grid-width-flex(12);
+    }
+}

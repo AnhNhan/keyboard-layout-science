@@ -1,0 +1,15 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "declaration": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "umd",
+        "newLine": "LF",
+        "outDir": "js/",
+        "pretty": true,
+        "rootDir": "src/"
+    },
+    "files": [
+        "src/index.ts"
+    ]
+}

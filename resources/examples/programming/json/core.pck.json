@@ -1,0 +1,24 @@
+{
+    "name": "core-pck",
+    "type": "css",
+    "contents": [
+        "application-colors",
+        "application-front-dashboard",
+        "application-tag-core",
+        "application-task-core",
+        "application-user-core",
+        "layout-boilerplate",
+        "layout-core",
+        "layout-detail-object",
+        "layout-fancy-text-shadows",
+        "layout-form",
+        "layout-grid",
+        "layout-property-list",
+        "layout-buttons",
+        "layout-bs-button-groups",
+        "layout-objects",
+        "layout-forum-object",
+        "layout-panel-panel",
+        "layout-tag-tag"
+    ]
+}

@@ -1,0 +1,74 @@
+
+.muted {
+  color: @grey;
+}
+
+//
+// Component animations
+// --------------------------------------------------
+
+// Heads up!
+//
+// We don't use the `.opacity()` mixin here since it causes a bug with text
+// fields in IE7-8. Source: https://github.com/twitter/bootstrap/pull/3552.
+
+.fade {
+  opacity: 0;
+  .transition(opacity .15s linear);
+  &.in {
+    opacity: 1;
+  }
+}
+
+.collapse {
+  display: none;
+  &.in {
+    display: block;
+  }
+}
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  .transition(height .35s ease);
+}
+
+// Utilities
+
+.clearfix {
+  .clearfix();
+}
+.pull-right {
+  .pull-right ();
+}
+.pull-left {
+  .pull-left ();
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+
+// For Affix plugin
+// -------------------------
+
+.affix {
+  // Don't affix by default
+  position: static;
+}
+
+.affix-bottom {
+  position: absolute;
+}
+
+@media (min-width: @breakPointTablet) {
+  .affix {
+    position: fixed;
+  }
+}
+
+.sr-only {
+  .sr-only ();
+}

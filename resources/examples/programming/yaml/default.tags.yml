@@ -1,0 +1,77 @@
+
+tags:
+
+  - name: bug
+    color: warning
+    displayOrder: -110
+    description: "Smash 'em"
+
+  - name: converge
+    color: project
+    displayOrder: -51
+    description: On the verge
+
+  - name: converge-application
+    color: project
+    displayOrder: -25
+
+  - name: newsroom-application
+    color: project
+    displayOrder: -20
+  - name: task-management
+    color: project
+    displayOrder: -20
+  - name: forum-application
+    color: project
+    displayOrder: -20
+  - name: activity-application
+    color: project
+    displayOrder: -20
+  - name: user-application
+    color: project
+    displayOrder: -20
+  - name: file-management-application
+    color: project
+    displayOrder: -20
+  - name: static-resource-management
+    color: project
+    displayOrder: -20
+
+  - name: user-experience
+  - name: interface-design
+  - name: non-core-experience
+  - name: security-related
+  - name: improvement
+  - name: infrastructure
+  - name: performance
+  - name: markup-related
+  - name: image-collection-feature
+
+  - name: idea
+    description: The more thinkiful may win
+
+  - name: blog
+    description: Blogs, interviews and other exlusives just for you
+
+  - name: general
+    description: There is much talk. And I have listened. Through rock and metal and time. Now I shall talk, and you shall listen.
+
+  - name: off-topic
+    description: Nothing that should fit into anything...
+
+  - name: asset
+    displayOrder: 30
+    description: My precioussss
+
+  - name: legacy
+    displayOrder: 30
+    description: Too old to remember
+
+  - name: spam
+    displayOrder: 30
+    description: To be spammed...
+
+  - name: draft
+    color: danger
+    displayOrder: 60
+    description: Very well unfinished
