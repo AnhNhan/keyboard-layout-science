@@ -1,0 +1,51 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'typings' ]
+2 info using npm@2.11.3
+3 info using node@v0.12.7
+4 verbose install initial load of C:\Users\anhnh_000\AppData\Roaming\npm\package.json
+5 verbose readDependencies loading dependencies from C:\Users\anhnh_000\AppData\Roaming\npm\package.json
+6 silly cache add args [ 'typings', null ]
+7 verbose cache add spec typings
+8 silly cache add parsed spec { raw: 'typings',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'typings',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: '*',
+8 silly cache add   type: 'range' }
+9 silly addNamed typings@*
+10 verbose addNamed "*" is a valid semver range for typings
+11 silly addNameRange { name: 'typings', range: '*', hasData: false }
+12 silly mapToRegistry name typings
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/typings
+16 verbose addNameRange registry:https://registry.npmjs.org/typings not in flight; fetching
+17 verbose request uri https://registry.npmjs.org/typings
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 1:57:42 PM
+20 verbose request id 8f7b11c0eda87415
+21 http request GET https://registry.npmjs.org/typings
+22 info retry will retry, error on last attempt: Error: Hostname/IP doesn't match certificate's altnames: "Host: registry.npmjs.org. is not in the cert's altnames: DNS:portal.tigertms.com, DNS:www.portal.tigertms.com"
+23 info attempt registry request try #2 at 1:57:52 PM
+24 http request GET https://registry.npmjs.org/typings
+25 info retry will retry, error on last attempt: Error: Hostname/IP doesn't match certificate's altnames: "Host: registry.npmjs.org. is not in the cert's altnames: DNS:portal.tigertms.com, DNS:www.portal.tigertms.com"
+26 info attempt registry request try #3 at 1:58:52 PM
+27 http request GET https://registry.npmjs.org/typings
+28 verbose stack Error: Hostname/IP doesn't match certificate's altnames: "Host: registry.npmjs.org. is not in the cert's altnames: DNS:portal.tigertms.com, DNS:www.portal.tigertms.com"
+28 verbose stack     at Object.checkServerIdentity (tls.js:210:15)
+28 verbose stack     at TLSSocket.<anonymous> (_tls_wrap.js:934:31)
+28 verbose stack     at TLSSocket.emit (events.js:104:17)
+28 verbose stack     at TLSSocket._finishInit (_tls_wrap.js:460:8)
+29 verbose cwd C:\Users\anhnh_000\dev\keyboard-layout-science
+30 error Windows_NT 6.3.9600
+31 error argv "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "-g" "typings"
+32 error node v0.12.7
+33 error npm  v2.11.3
+34 error Hostname/IP doesn't match certificate's altnames: "Host: registry.npmjs.org. is not in the cert's altnames: DNS:portal.tigertms.com, DNS:www.portal.tigertms.com"
+35 error If you need help, you may report this error at:
+35 error     <https://github.com/npm/npm/issues>
+36 verbose exit [ 1, true ]

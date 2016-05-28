@@ -7,40 +7,31 @@
     }
 })(function (require, exports) {
     "use strict";
-    var Hand;
-    (function (Hand) {
-        var Left;
-        var Right;
-    })(Hand = exports.Hand || (exports.Hand = {}));
-    var Finger;
-    (function (Finger) {
-        var Thumb;
-        var Pointer;
-        var Middle;
-        var Ring;
-        var Pinky;
-    })(Finger = exports.Finger || (exports.Finger = {}));
-    var Keygroup;
-    (function (Keygroup) {
-        var Alpha;
-        var Modifier;
-    })(Keygroup = exports.Keygroup || (exports.Keygroup = {}));
-    var AlphaGroup;
-    (function (AlphaGroup) {
-        var Letter;
-        var Digit;
-        /** e.g. Space and Tab */
-        var Whitespace;
-        /** e.g. Slash, Dash */
-        var Special;
-        var NonPrintable;
-    })(AlphaGroup = exports.AlphaGroup || (exports.AlphaGroup = {}));
-    var Modifiers;
-    (function (Modifiers) {
-        var Ctrl;
-        var Shift;
-        var Alt;
-        var AltGr;
-        var Tab;
-    })(Modifiers = exports.Modifiers || (exports.Modifiers = {}));
+    exports.hand_left = {
+        id: 123,
+        thumb: { hand: undefined, id: 1 },
+        pointer: { hand: undefined, id: 2 },
+        middle: { hand: undefined, id: 3 },
+        ring: { hand: undefined, id: 4 },
+        pinky: { hand: undefined, id: 5 }
+    };
+    exports.hand_right = {
+        id: 321,
+        thumb: { hand: undefined, id: 6 },
+        pointer: { hand: undefined, id: 7 },
+        middle: { hand: undefined, id: 8 },
+        ring: { hand: undefined, id: 9 },
+        pinky: { hand: undefined, id: 10 }
+    };
+    exports.hand_left.thumb.hand = exports.hand_left;
+    exports.hand_left.pointer.hand = exports.hand_left;
+    exports.hand_left.middle.hand = exports.hand_left;
+    exports.hand_left.ring.hand = exports.hand_left;
+    exports.hand_left.pinky.hand = exports.hand_left;
+    exports.hand_right.thumb.hand = exports.hand_right;
+    exports.hand_right.pointer.hand = exports.hand_right;
+    exports.hand_right.middle.hand = exports.hand_right;
+    exports.hand_right.ring.hand = exports.hand_right;
+    exports.hand_right.pinky.hand = exports.hand_right;
 });
+//# sourceMappingURL=definitions.js.map
