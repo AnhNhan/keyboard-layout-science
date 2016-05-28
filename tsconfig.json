@@ -7,9 +7,14 @@
         "newLine": "LF",
         "outDir": "js/",
         "pretty": true,
-        "rootDir": "src/"
+        "rootDir": "src/",
+        "noImplicitReturns": true,
+        "target": "es2015",
+        "watch": true,
+        "sourceMap": true
     },
     "files": [
-        "src/index.ts"
+        "src/test_detailed.ts",
+        "src/test_basic.ts"
     ]
 }

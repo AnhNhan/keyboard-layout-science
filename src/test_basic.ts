@@ -1,3 +1,5 @@
+/// <reference path="../typings/index.d.ts" />
+
 import * as def from './definitions';
 import * as analyze from './analyze';
 
