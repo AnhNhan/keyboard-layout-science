@@ -36,16 +36,27 @@ function keystroke(wanted_character, key: def.Key, pressed_modifiers: def.Detail
     };
 }
 
+interface KeycapCharacters
+{
+    [character: string]: def.Keystrokes<def.DetailedKeystroke>;
+}
+
+function add_letter_to_keycap_characters(
+    keycap_characters: KeycapCharacters,
+    character,
+    modifiers: def.DetailedKeystroke[]
+) {
+    return Object.defineProperty(keycap_characters, character, {
+        value: modifiers,
+    });
+};
+
 function letter_characters(letter: string, shift_keystroke: def.DetailedKeystroke)
+    : KeycapCharacters
 {
     return {
         [letter.toLowerCase()]: [],
         [letter.toUpperCase()]: [shift_keystroke],
-        add: function (character, modifiers: def.DetailedKeystroke[]) {
-            return Object.defineProperty(this, character, {
-                value: modifiers,
-            });
-        },
     };
 }
 
@@ -57,7 +68,11 @@ function letter_characters(letter: string, shift_keystroke: def.DetailedKeystrok
  *
  * pull requests are welcome!
  */
-function possible_keycaps(shift_keystroke: def.DetailedKeystroke, alt_gr_keystroke: def.DetailedKeystroke) {
+function possible_keycaps(
+    shift_keystroke: def.DetailedKeystroke,
+    alt_gr_keystroke: def.DetailedKeystroke,
+    space_keytroke: def.DetailedKeystroke
+) {
     // raw alphabet keys, no other characters with modifiers other than shift
     let keycaps = lib.alphanum_range('a', 'z').map(function (letter) {
         return {
@@ -66,14 +81,291 @@ function possible_keycaps(shift_keystroke: def.DetailedKeystroke, alt_gr_keystro
         };
     });
 
+    // General
+    keycaps.push({
+        label: '1 - !',
+        characters: {
+            '1': [],
+            '!': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '- - _',
+        characters: {
+            '-': [],
+            '_': [shift_keystroke],
+        },
+    });
+
+    // ANSI - US
+    keycaps.push({
+        label: '/ - ?',
+        characters: {
+            '/': [],
+            '?': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: ', - <',
+        characters: {
+            ',': [],
+            '<': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '. - >',
+        characters: {
+            '.': [],
+            '>': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '\\ - |',
+        characters: {
+            '\\': [],
+            '|': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '= - +',
+        characters: {
+            '=': [],
+            '+': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '[ - {',
+        characters: {
+            '[': [],
+            '{': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '] - }',
+        characters: {
+            ']': [],
+            '}': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '; - :',
+        characters: {
+            ';': [],
+            ':': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '\' - "',
+        characters: {
+            '\'': [],
+            '"': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '` - ~',
+        characters: {
+            '`': [],
+            '~': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '2 - @',
+        characters: {
+            '2': [],
+            '@': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '3 - #',
+        characters: {
+            '3': [],
+            '#': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '4 - ???',
+        characters: {
+            '4': [],
+            '>': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '6 - ^',
+        characters: {
+            '6': [],
+            '^': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '7 - &',
+        characters: {
+            '7': [],
+            '&': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '8 - *',
+        characters: {
+            '8': [],
+            '*': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '9 - (',
+        characters: {
+            '9': [],
+            '(': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '0 - )',
+        characters: {
+            '0': [],
+            ')': [shift_keystroke],
+        },
+    });
+
     // DE
     keycaps.push({
         label: 'Q + @',
-        characters: letter_characters('q', shift_keystroke).add('@', [alt_gr_keystroke]),
+        characters: add_letter_to_keycap_characters(letter_characters('q', shift_keystroke), '@', [alt_gr_keystroke]),
     });
     keycaps.push({
         label: 'E + €',
-        characters: letter_characters('e', shift_keystroke).add('€', [alt_gr_keystroke]),
+        characters: add_letter_to_keycap_characters(letter_characters('e', shift_keystroke), '€', [alt_gr_keystroke]),
+    });
+    keycaps.push({
+        label: 'M + µ',
+        characters: add_letter_to_keycap_characters(letter_characters('m', shift_keystroke), 'µ', [alt_gr_keystroke]),
+    });
+    keycaps.push({
+        label: 'ß?\\',
+        characters: {
+            'ß': [],
+            '?': [shift_keystroke],
+            '\\': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '+*~',
+        characters: {
+            '+': [],
+            '*': [shift_keystroke],
+            '~': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '<>|',
+        characters: {
+            '<': [],
+            '>': [shift_keystroke],
+            '|': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '#\'',
+        characters: {
+            '#': [],
+            '\'': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: ',;',
+        characters: {
+            ',': [],
+            ';': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '.:',
+        characters: {
+            '.': [],
+            ':': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '´`',
+        characters: { // TODO: Since they are dead keys, add space modifier?
+            '´': [],
+            '`': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '^°',
+        characters: {
+            '^': [], // this is a dead key, too
+            '°': [shift_keystroke], // this one is not
+        },
+    });
+    // DE - Specific Numbers
+    keycaps.push({
+        label: '2 - "',
+        characters: {
+            '2': [],
+            '"': [shift_keystroke],
+            '²': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '3 - §',
+        characters: {
+            '3': [],
+            '§': [shift_keystroke],
+            '³': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '4 - $',
+        characters: {
+            '4': [],
+            '$': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '5 - %',
+        characters: {
+            '5': [],
+            '%': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '6 - &',
+        characters: {
+            '6': [],
+            '&': [shift_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '7 - /',
+        characters: {
+            '7': [],
+            '/': [shift_keystroke],
+            '{': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '8 - (',
+        characters: {
+            '8': [],
+            '(': [shift_keystroke],
+            '[': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '9 - )',
+        characters: {
+            '9': [],
+            ')': [shift_keystroke],
+            ']': [alt_gr_keystroke],
+        },
+    });
+    keycaps.push({
+        label: '0 - =',
+        characters: {
+            '0': [],
+            '=': [shift_keystroke],
+            '}': [alt_gr_keystroke],
+        },
     });
 
     return keycaps;
