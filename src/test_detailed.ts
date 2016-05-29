@@ -5,7 +5,7 @@ import * as analyze from './analyze';
 import * as lib from './lib';
 
 import * as fs from 'fs';
-import * as _ from 'lodash';
+import * as _ from 'underscore';
 
 let keymap: def.KeyMap<def.DetailedKeystroke> = {};
 
@@ -36,6 +36,12 @@ function keystroke(wanted_character, key: def.Key, pressed_modifiers: def.Detail
     };
 }
 
+interface Keycap
+{
+    label: string;
+    characters: KeycapCharacters;
+}
+
 interface KeycapCharacters
 {
     [character: string]: def.Keystrokes<def.DetailedKeystroke>;
@@ -61,7 +67,7 @@ function letter_characters(letter: string, shift_keystroke: def.DetailedKeystrok
 }
 
 /**
- * we want labeled keyboards, so i'm restricting possible keys to existing keycaps
+ * we want labeled keyboards, so i'm restricting possible keys to existing keycaps available around the world
  *
  * for now i'll cover most of ANSI/ISO US/US-INT/DE/UK layouts. bear in mind
  * that i don't know all of the key combinations, though.
@@ -389,11 +395,68 @@ let key_locations_ansi = [
 
 let space_row = [
     key('LCtrl', 4, 0, def.hand_left.pinky, {}, true),
-    key('LWin', 4, 0, def.hand_left.ring, {}, true),
-    key('LAlt', 4, 0, def.hand_left.thumb, {}, true),
-    key('Space', 4, 0, def.hand_left.thumb, { ' ': [] }, true),
-    key('AltGr', 4, 0, def.hand_left.thumb, {}, true),
-    key('RWin', 4, 0, def.hand_left.middle, {}, true),
-    key('App', 4, 0, def.hand_left.ring, {}, true),
-    key('RCtrl', 4, 0, def.hand_left.pinky, {}, true),
+    key('LWin', 4, 1, def.hand_left.ring, {}, true),
+    key('LAlt', 4, 2, def.hand_left.thumb, {}, true),
+    key('Space', 4, 3, def.hand_left.thumb, { ' ': [] }, true),
+    key('AltGr', 4, 4, def.hand_left.thumb, {}, true),
+    key('RWin', 4, 5, def.hand_left.middle, {}, true),
+    key('App', 4, 6, def.hand_left.ring, {}, true),
+    key('RCtrl', 4, 7, def.hand_left.pinky, {}, true),
 ];
+
+type KeymapEntry = number[] | def.Key;
+
+function generate_keymap_empty_standard_mods(key_locations: number[][][], space_row: def.Key[], is_ansi = true)
+    : KeymapEntry[][]
+{
+    let number_row: KeymapEntry[] = key_locations[0].slice(0, -1);
+    let last_num_row_entry = key_locations[0].slice(-1)[0];
+    number_row.push(key('Backspace', last_num_row_entry[0], last_num_row_entry[1], def.hand_right.pinky, {}, true));
+
+    let qwert_row: KeymapEntry[] = key_locations[1].slice(1, -1);
+    let first_qwert_row_entry = key_locations[1][0];
+    let last_qwert_row_entry = key_locations[1].slice(-1)[0];
+    qwert_row.unshift(key('Tab', first_qwert_row_entry[0], first_qwert_row_entry[1], def.hand_left.ring, { '\t': [] }, true));
+    qwert_row.push(is_ansi ? last_num_row_entry : key('Enter', last_qwert_row_entry[0], last_qwert_row_entry[1], def.hand_right.pinky, { '\n': [] }, true));
+
+    let asdf_row: KeymapEntry[] = key_locations[2].slice(1, -1);
+    let first_asdf_row_entry = key_locations[2][0];
+    let last_asdf_row_entry = key_locations[2].slice(-1)[0];
+    asdf_row.unshift(key('Caps Lock', first_asdf_row_entry[0], first_asdf_row_entry[1], def.hand_left.pinky, {}, true));
+    if (is_ansi)
+    {
+        asdf_row.push(key('Enter', last_asdf_row_entry[0], last_asdf_row_entry[1], def.hand_right.pinky, { '\n': [] }, true));
+    } else {
+        asdf_row.push(last_asdf_row_entry);
+    }
+
+    let shift_row: KeymapEntry[] = key_locations[3].slice(1, -1);
+    let first_shift_row_entry = key_locations[3][0];
+    let last_shift_row_entry = key_locations[3].slice(-1)[0];
+    shift_row.unshift(key('LShift', first_shift_row_entry[0], first_shift_row_entry[1], def.hand_left.pinky, {}, true));
+    shift_row.push(key('RShift', last_shift_row_entry[0], last_shift_row_entry[1], def.hand_right.pinky, {}, true));
+
+    return [
+        number_row,
+        qwert_row,
+        asdf_row,
+        shift_row,
+        space_row,
+    ];
+}
+
+let required_keys = [
+    ...lib.alphanum_range('a', '9'),
+    ...'{}[]()#\'"$&%!/\\?-_,.;:+*~`=<>|'.split(''),
+];
+
+let empty_board_ansi = generate_keymap_empty_standard_mods(key_locations_ansi, space_row, true);
+
+let shift_key = empty_board_ansi[3][0] as def.Key;
+let alt_gr_key = empty_board_ansi[4][4] as def.Key;
+let space_key = empty_board_ansi[4][3] as def.Key;
+
+let keycaps = possible_keycaps(keystroke('Shift', shift_key), keystroke('AltGr', alt_gr_key), keystroke('Space', space_key));
+
+let keys_by_character = _.groupBy(keycaps.map(keycap => _.map(keycap.characters, (x, character) => [character, keycap] as [string, Keycap])).reduce((prev, val) => prev.concat(val), []), 0);
+
